@@ -1,23 +1,5 @@
 {
-  "messages": [
-    {
-      "id": "msg_1761586418_16",
-      "telegram_message_id": 16,
-      "content": "Si escribes directo si funciona",
-      "images": [],
-      "timestamp": "2025-10-27T17:33:38",
-      "status": "pending",
-      "tags": [],
-      "created_at": "2025-10-27T17:36:26.653927",
-      "chat_id": 488065734,
-      "from_user": {
-        "id": 488065734,
-        "username": "nailunita",
-        "first_name": "Nai",
-        "last_name": null
-      }
-    }
-  ],
-  "lastUpdated": "2025-10-27T17:37:32.134Z",
+  "messages": [],
+  "lastUpdated": "2025-11-04T22:47:39.468Z",
   "version": "1.0"
 }
