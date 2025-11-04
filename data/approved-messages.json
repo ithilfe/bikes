@@ -179,8 +179,28 @@
         "last_name": null
       },
       "approved_at": "2025-10-27T17:37:32.133Z"
+    },
+    {
+      "id": "msg_1761586418_16",
+      "telegram_message_id": 16,
+      "content": "Si escribes directo si funciona",
+      "images": [],
+      "timestamp": "2025-10-27T17:33:38",
+      "status": "approved",
+      "tags": [
+        "Eee"
+      ],
+      "created_at": "2025-10-27T17:36:26.653927",
+      "chat_id": 488065734,
+      "from_user": {
+        "id": 488065734,
+        "username": "nailunita",
+        "first_name": "Nai",
+        "last_name": null
+      },
+      "approved_at": "2025-11-04T22:47:39.466Z"
     }
   ],
-  "lastUpdated": "2025-10-27T17:37:32.849Z",
+  "lastUpdated": "2025-11-04T22:47:40.085Z",
   "version": "1.0"
 }
