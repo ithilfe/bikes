@@ -1,5 +1,23 @@
 {
-  "messages": [],
-  "lastUpdated": "2025-11-04T22:47:39.468Z",
+  "messages": [
+    {
+      "id": "msg_1762887912_1",
+      "telegram_message_id": 1,
+      "content": "/start",
+      "images": [],
+      "timestamp": "2025-11-11T19:05:12",
+      "status": "pending",
+      "tags": [],
+      "created_at": "2025-11-11T19:06:01.901365",
+      "chat_id": 5590328926,
+      "from_user": {
+        "id": 5590328926,
+        "username": "yadenisPM",
+        "first_name": "Yadenis",
+        "last_name": "P."
+      }
+    }
+  ],
+  "lastUpdated": "2025-11-11T19:06:02.184884",
   "version": "1.0"
 }
