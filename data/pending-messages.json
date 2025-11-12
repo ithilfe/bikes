@@ -16,8 +16,25 @@
         "first_name": "Yadenis",
         "last_name": "P."
       }
+    },
+    {
+      "id": "msg_1762887912_1",
+      "telegram_message_id": 1,
+      "content": "/start",
+      "images": [],
+      "timestamp": "2025-11-11T19:05:12",
+      "status": "pending",
+      "tags": [],
+      "created_at": "2025-11-12T01:40:21.115119",
+      "chat_id": 5590328926,
+      "from_user": {
+        "id": 5590328926,
+        "username": "yadenisPM",
+        "first_name": "Yadenis",
+        "last_name": "P."
+      }
     }
   ],
-  "lastUpdated": "2025-11-11T19:07:25.708Z",
+  "lastUpdated": "2025-11-12T01:40:21.369939",
   "version": "1.0"
 }
