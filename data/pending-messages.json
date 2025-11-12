@@ -33,8 +33,25 @@
         "first_name": "Yadenis",
         "last_name": "P."
       }
+    },
+    {
+      "id": "msg_1762887923_2",
+      "telegram_message_id": 2,
+      "content": "probando mensaje con  manoli",
+      "images": [],
+      "timestamp": "2025-11-11T19:05:23",
+      "status": "pending",
+      "tags": [],
+      "created_at": "2025-11-12T01:40:22.478133",
+      "chat_id": 5590328926,
+      "from_user": {
+        "id": 5590328926,
+        "username": "yadenisPM",
+        "first_name": "Yadenis",
+        "last_name": "P."
+      }
     }
   ],
-  "lastUpdated": "2025-11-12T01:40:21.369939",
+  "lastUpdated": "2025-11-12T01:40:22.828537",
   "version": "1.0"
 }
