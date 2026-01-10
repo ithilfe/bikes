@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telegram Bot Blog - Admin</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <h1>📱 Telegram Bot Blog Admin</h1>
+        <div class="auth-section" id="auth-section">
+          <div id="google-login-container">
+            <div id="g_id_onload"
+                 data-client_id=""
+                 data-context="signin"
+                 data-ux_mode="popup"
+                 data-callback="handleGoogleLogin"
+                 data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="rectangular"
+                 data-theme="outline"
+                 data-text="signin_with"
+                 data-size="large"
+                 data-logo_alignment="left">
+            </div>
+          </div>
+          <div class="divider"><span>OR</span></div>
+          <input
+            type="text"
+            id="admin-username"
+            placeholder="Username"
+          />
+          <input
+            type="password"
+            id="admin-password"
+            placeholder="Password"
+          />
+          <button id="login-btn">Login</button>
+        </div>
+        <div class="user-info" id="user-info" style="display: none">
+          <span id="username"></span>
+          <button id="logout-btn">Logout</button>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main" id="main-content" style="display: none">
+        <!-- Stats Dashboard -->
+        <section class="stats">
+          <div class="stat-card">
+            <h3>Pending</h3>
+            <span class="stat-number" id="pending-count">0</span>
+          </div>
+          <div class="stat-card">
+            <h3>Approved</h3>
+            <span class="stat-number" id="approved-count">0</span>
+          </div>
+          <div class="stat-card">
+            <h3>Published</h3>
+            <span class="stat-number" id="published-count">0</span>
+          </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs">
+          <button class="tab-btn active" data-tab="pending">
+            Pending Messages (<span id="pending-tab-count">0</span>)
+          </button>
+          <button class="tab-btn" data-tab="approved">
+            Approved Messages (<span id="approved-tab-count">0</span>)
+          </button>
+          <button class="tab-btn" data-tab="published">
+            Published Posts (<span id="published-tab-count">0</span>)
+          </button>
+        </nav>
+
+        <!-- Message Lists -->
+        <section class="tab-content">
+          <!-- Pending Messages -->
+          <div class="tab-panel active" id="pending-panel">
+            <div class="messages-container" id="pending-messages">
+              <div class="loading">Loading pending messages...</div>
+            </div>
+          </div>
+
+          <!-- Approved Messages -->
+          <div class="tab-panel" id="approved-panel">
+            <div class="messages-container" id="approved-messages">
+              <div class="loading">Loading approved messages...</div>
+            </div>
+          </div>
+
+          <!-- Published Messages -->
+          <div class="tab-panel" id="published-panel">
+            <div class="messages-container" id="published-messages">
+              <div class="loading">Loading published messages...</div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Message Detail Modal -->
+      <div class="modal" id="message-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="modal-title">Message Details</h2>
+            <button class="close-btn" id="close-modal">&times;</button>
+          </div>
+          <div class="modal-body" id="modal-body">
+            <!-- Content will be populated by JavaScript -->
+          </div>
+          <div class="modal-footer" id="modal-footer">
+            <!-- Action buttons will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Messages -->
+      <div class="notifications" id="notifications"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
