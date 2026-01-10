@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
     // Event listeners
-    loginBtn.addEventListener('click', login);
-    logoutBtn.addEventListener('click', logout);
+    if (loginBtn) loginBtn.addEventListener('click', login);
+    if (logoutBtn) logoutBtn.addEventListener('click', logout);
     
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab));
@@ -209,9 +209,9 @@ async function loadAllMessages() {
             loadMessages('published-messages.json')
         ]);
 
-        currentMessages.pending = pending.messages || [];
-        currentMessages.approved = approved.messages || [];
-        currentMessages.published = published.messages || [];
+        currentMessages.pending = (pending && pending.messages) || [];
+        currentMessages.approved = (approved && approved.messages) || [];
+        currentMessages.published = (published && published.messages) || [];
 
         updateStats();
         renderMessages();
@@ -231,13 +231,29 @@ async function loadMessages(filename) {
 
         if (response.ok) {
             const data = await response.json();
-            return JSON.parse(atob(data.content));
+            try {
+                const parsed = JSON.parse(atob(data.content));
+                if (parsed && typeof parsed === 'object' && 'messages' in parsed) {
+                    return parsed;
+                }
+            } catch (e) {
+                console.error('Failed to parse messages:', e);
+            }
         }
     }
     
     // Fallback to direct fetch if no token or API fails (using ../.. to go up from static/admin)
-    const response = await fetch(`../../data/${filename}`);
-    if (response.ok) return await response.json();
+    try {
+        const response = await fetch(`../../data/${filename}`);
+        if (response.ok) {
+            const parsed = await response.json();
+            if (parsed && typeof parsed === 'object' && 'messages' in parsed) {
+                return parsed;
+            }
+        }
+    } catch (e) {
+        console.error('Fallback fetch failed:', e);
+    }
     return { messages: [] };
 }
 

@@ -89,7 +89,10 @@ async function loadMessages(filePath) {
     try {
         if (await fs.pathExists(filePath)) {
             const content = await fs.readFile(filePath, 'utf8');
-            return JSON.parse(content);
+            const parsed = JSON.parse(content);
+            if (parsed && typeof parsed === 'object' && 'messages' in parsed) {
+                return parsed;
+            }
         }
     } catch (error) {
         console.warn(`Could not load ${filePath}:`, error.message);

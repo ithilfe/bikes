@@ -101,8 +101,8 @@ class TelegramFetcher:
 
         response = self._make_request(url)
 
-        if not response.get("ok"):
-            raise Exception(f"Telegram API error: {response.get('description')}")
+        if not isinstance(response, dict) or not response.get("ok"):
+            raise Exception(f"Telegram API error: {response.get('description') if isinstance(response, dict) else 'Unknown error'}")
 
         return response.get("result")
 
@@ -138,7 +138,7 @@ class TelegramFetcher:
             response = self._github_request(
                 "GET", f"/repos/{self.github_owner}/{self.github_repo}/contents/{path}"
             )
-            if response and "content" in response:
+            if isinstance(response, dict) and "content" in response:
                 return base64.b64decode(response["content"]).decode("utf-8")
         except Exception as e:
             print(f"Error getting file {path}: {e}")
@@ -211,7 +211,7 @@ class TelegramFetcher:
         }
 
         # Process images if present
-        if "photo" in message and message["photo"]:
+        if isinstance(message, dict) and "photo" in message and message["photo"]:
             image_info = self._process_image(message, message_id)
             if image_info:
                 message_data["images"].append(image_info)
@@ -225,7 +225,7 @@ class TelegramFetcher:
             photo = message["photo"][-1]
             file_info = self._telegram_request("getFile", {"file_id": photo["file_id"]})
 
-            if not file_info or "file_path" not in file_info:
+            if not isinstance(file_info, dict) or "file_path" not in file_info:
                 return None
 
             # Download image
@@ -322,7 +322,7 @@ class TelegramFetcher:
                 last_id = update["update_id"]
 
                 # Only process message updates
-                if "message" not in update:
+                if not isinstance(update, dict) or "message" not in update:
                     continue
 
                 message = update["message"]

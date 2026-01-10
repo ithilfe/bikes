@@ -34,8 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Event listeners
-    loginBtn.addEventListener('click', authenticateUser);
-    logoutBtn.addEventListener('click', logout);
+    if (loginBtn) loginBtn.addEventListener('click', authenticateUser);
+    if (logoutBtn) logoutBtn.addEventListener('click', logout);
     console.log('Login/Logout listeners attached.');
 
     // Tab switching
@@ -165,9 +165,9 @@ async function loadAllMessages() {
             loadMessages('published-messages.json')
         ]);
 
-        currentMessages.pending = pending.messages || [];
-        currentMessages.approved = approved.messages || [];
-        currentMessages.published = published.messages || [];
+        currentMessages.pending = (pending && pending.messages) || [];
+        currentMessages.approved = (approved && approved.messages) || [];
+        currentMessages.published = (published && published.messages) || [];
         console.log(`Loaded messages: Pending=${currentMessages.pending.length}, Approved=${currentMessages.approved.length}, Published=${currentMessages.published.length}`);
 
         updateStats();
@@ -201,7 +201,11 @@ async function loadMessages(filename) {
     const data = await response.json();
     const content = atob(data.content);
     console.log(`Successfully loaded and decoded ${filename}.`);
-    return JSON.parse(content);
+    const parsed = JSON.parse(content);
+    if (parsed && typeof parsed === 'object' && 'messages' in parsed) {
+        return parsed;
+    }
+    return { messages: [], lastUpdated: new Date().toISOString(), version: "1.0" };
 }
 
 function updateStats() {
