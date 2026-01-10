@@ -5,22 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Telegram Bot Blog - Admin</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>
   <body>
     <div class="container">
       <!-- Header -->
       <header class="header">
         <h1>📱 Telegram Bot Blog Admin</h1>
+        
+        <!-- Auth Section -->
         <div class="auth-section" id="auth-section">
-          <input
-            type="password"
-            id="github-token"
-            placeholder="GitHub Personal Access Token"
-          />
-          <button id="login-btn">Connect to GitHub</button>
+          <h2>Admin Login</h2>
+          
+          <!-- Google Login -->
+          <div id="google-login-container">
+            <div id="g_id_onload"
+                 data-client_id=""
+                 data-context="signin"
+                 data-ux_mode="popup"
+                 data-callback="handleGoogleLogin"
+                 data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-shape="rectangular"
+                 data-theme="outline"
+                 data-text="signin_with"
+                 data-size="large"
+                 data-logo_alignment="left">
+            </div>
+          </div>
+
+          <div class="divider"><span>OR</span></div>
+          
+          <!-- Username/Password Login -->
+          <div class="login-form">
+            <input
+              type="text"
+              id="admin-username"
+              placeholder="Username"
+            />
+            <input
+              type="password"
+              id="admin-password"
+              placeholder="Password"
+            />
+            <button id="login-btn">Login</button>
+          </div>
+          
+          <div class="divider"><span>OR</span></div>
+          
+          <!-- GitHub Token Login (Legacy/Direct) -->
+          <div class="login-form">
+            <input
+              type="password"
+              id="github-token-direct"
+              placeholder="GitHub Personal Access Token"
+            />
+            <button id="github-login-btn">Connect with GitHub Token</button>
+          </div>
+          <p class="help-text">Direct GitHub token login for developers.</p>
         </div>
+
+        <!-- User Info (Logged In) -->
         <div class="user-info" id="user-info" style="display: none">
-          <span id="username"></span>
+          <div class="user-details">
+            <span class="welcome">Welcome, <strong id="username"></strong></span>
+            <span class="auth-method" id="auth-method"></span>
+          </div>
+          <div class="token-status" id="token-status">
+            <span id="token-indicator" class="indicator"></span>
+            <button id="manage-token-btn" class="btn-small">Update Sync Key</button>
+          </div>
           <button id="logout-btn">Logout</button>
         </div>
       </header>
@@ -46,37 +102,28 @@
         <!-- Navigation Tabs -->
         <nav class="tabs">
           <button class="tab-btn active" data-tab="pending">
-            Pending Messages (<span id="pending-tab-count">0</span>)
+            Pending (<span id="pending-tab-count">0</span>)
           </button>
           <button class="tab-btn" data-tab="approved">
-            Approved Messages (<span id="approved-tab-count">0</span>)
+            Approved (<span id="approved-tab-count">0</span>)
           </button>
           <button class="tab-btn" data-tab="published">
-            Published Posts (<span id="published-tab-count">0</span>)
+            Published (<span id="published-tab-count">0</span>)
           </button>
         </nav>
 
         <!-- Message Lists -->
         <section class="tab-content">
-          <!-- Pending Messages -->
           <div class="tab-panel active" id="pending-panel">
             <div class="messages-container" id="pending-messages">
-              <div class="loading">Loading pending messages...</div>
+              <div class="loading">Loading messages...</div>
             </div>
           </div>
-
-          <!-- Approved Messages -->
           <div class="tab-panel" id="approved-panel">
-            <div class="messages-container" id="approved-messages">
-              <div class="loading">Loading approved messages...</div>
-            </div>
+            <div class="messages-container" id="approved-messages"></div>
           </div>
-
-          <!-- Published Messages -->
           <div class="tab-panel" id="published-panel">
-            <div class="messages-container" id="published-messages">
-              <div class="loading">Loading published messages...</div>
-            </div>
+            <div class="messages-container" id="published-messages"></div>
           </div>
         </section>
       </main>
@@ -88,16 +135,34 @@
             <h2 id="modal-title">Message Details</h2>
             <button class="close-btn" id="close-modal">&times;</button>
           </div>
-          <div class="modal-body" id="modal-body">
-            <!-- Content will be populated by JavaScript -->
+          <div class="modal-body" id="modal-body"></div>
+          <div class="modal-footer" id="modal-footer"></div>
+        </div>
+      </div>
+
+      <!-- Token Modal -->
+      <div class="modal" id="token-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Repository Sync Key</h2>
+            <button class="close-btn" id="close-token-modal">&times;</button>
           </div>
-          <div class="modal-footer" id="modal-footer">
-            <!-- Action buttons will be populated by JavaScript -->
+          <div class="modal-body">
+            <p>To save changes (approve/reject), you need a Repository Sync Key (GitHub Personal Access Token).</p>
+            <p>If you don't have one, ask the site administrator.</p>
+            <div class="form-group">
+              <label>Sync Key:</label>
+              <input type="password" id="sync-key-input" placeholder="ghp_xxxxxxxxxxxx">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="save-token-btn" class="btn-approve">Save Key</button>
+            <button id="cancel-token-btn" class="btn-secondary">Cancel</button>
           </div>
         </div>
       </div>
 
-      <!-- Status Messages -->
+      <!-- Notifications -->
       <div class="notifications" id="notifications"></div>
     </div>
 
