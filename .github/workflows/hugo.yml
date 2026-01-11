@@ -96,7 +96,12 @@ jobs:
             --cacheDir "${{ runner.temp }}/hugo_cache"
       - name: Create admin config
         run: |
-          echo '${{ secrets.ADMIN_CONFIG }}' > public/admin/config.json
+          PAT="${{ secrets.GH_PAT || secrets.PERSONAL_ACCESS_TOKEN }}"
+          if [ -n "$PAT" ]; then
+            echo '${{ secrets.ADMIN_CONFIG }}' | jq --arg pat "$PAT" '. + {github_token: $pat}' > public/admin/config.json
+          else
+            echo '${{ secrets.ADMIN_CONFIG }}' > public/admin/config.json
+          fi
       - name: Cache save
         id: cache-save
         uses: actions/cache/save@v4

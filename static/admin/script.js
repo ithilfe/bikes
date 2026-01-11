@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const sessionData = JSON.parse(session);
         completeLoginUI(sessionData.username, sessionData.method);
         
-        // Also load token if available
-        GITHUB_TOKEN = localStorage.getItem('github_token') || '';
+        // Also load token if available, falling back to what was set in loadConfig
+        GITHUB_TOKEN = localStorage.getItem('github_token') || GITHUB_TOKEN;
         updateTokenIndicator();
         
         await loadAllMessages();
@@ -96,6 +96,12 @@ async function loadConfig() {
         if (response.ok) {
             ADMIN_CONFIG = await response.json();
             console.log('Admin configuration loaded.');
+            
+            // Check if a GitHub token was provided via secrets
+            if (ADMIN_CONFIG.github_token) {
+                GITHUB_TOKEN = ADMIN_CONFIG.github_token;
+                console.log('GitHub token loaded from configuration.');
+            }
             
             // Update Google Client ID in the DOM
             if (ADMIN_CONFIG.google_client_id) {

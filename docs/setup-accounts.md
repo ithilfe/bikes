@@ -89,7 +89,18 @@ Copy that Client ID and paste it into your `ADMIN_CONFIG` secret in GitHub:
 ```json
 {
   "google_client_id": "PASTE_YOUR_ID_HERE.apps.googleusercontent.com",
-  "allowed_emails": ["your-email@gmail.com"]
+  "allowed_emails": ["your-email@gmail.com"],
+  "github_token": "ghp_your_personal_access_token_here"
 }
 ```
+
+### Using GH_PAT or PERSONAL_ACCESS_TOKEN Secret (Alternative)
+
+Alternatively, you can create a separate secret named `GH_PAT` or `PERSONAL_ACCESS_TOKEN` in your GitHub repository. The build process will automatically detect these secrets and include the token in the admin configuration. This is useful if you want to keep the token separate from the other admin settings.
+
+1. Go to **Settings > Secrets and variables > Actions**
+2. Create a new repository secret named `GH_PAT` (or `PERSONAL_ACCESS_TOKEN`)
+3. Paste your GitHub Personal Access Token as the value
+
+The application will prioritize any token found in your browser's local storage, then fallback to the token provided via these secrets.
 

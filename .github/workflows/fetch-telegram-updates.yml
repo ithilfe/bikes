@@ -43,7 +43,7 @@ jobs:
       - name: Fetch Telegram updates
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.PERSONAL_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
           GITHUB_OWNER: ${{ github.repository_owner }}
           GITHUB_REPO: ${{ github.event.repository.name }}
         run: |
